@@ -1,7 +1,7 @@
 import torch
-from ._C import decode as decode_cuda
-from ._C import iou as iou_cuda
-from ._C import nms as nms_cuda
+# from ._C import decode as decode_cuda
+# from ._C import iou as iou_cuda
+# from ._C import nms as nms_cuda
 import numpy as np
 from .utils import order_points, rotate_boxes
 
@@ -217,8 +217,8 @@ def snap_to_anchors_rotated(boxes, size, stride, anchors, num_classes, device, a
     anchors_axis = (xy_2corners.to(torch.float) + anchors_axis.view(-1, 1, 1, 4)).contiguous().view(-1, 4)
     anchors_rotated = (xy_4corners.to(torch.float) + anchors_rotated.view(-1, 1, 1, 8)).contiguous().view(-1, 8)
 
-    if torch.cuda.is_available():
-        iou = iou_cuda
+    # if torch.cuda.is_available():
+    #     iou = iou_cuda
 
     overlap = iou(boxes_rotated.contiguous().view(-1), anchors_rotated.contiguous().view(-1))[0]
 
@@ -259,9 +259,9 @@ def decode(all_cls_head, all_box_head, stride=1, threshold=0.05, top_n=1000, anc
         anchors = anchors[0]
     num_boxes = 4 if not rotated else 6
 
-    if torch.cuda.is_available():
-        return decode_cuda(all_cls_head.float(), all_box_head.float(),
-            anchors.view(-1).tolist(), stride, threshold, top_n, rotated)
+    # if torch.cuda.is_available():
+    #     return decode_cuda(all_cls_head.float(), all_box_head.float(),
+    #         anchors.view(-1).tolist(), stride, threshold, top_n, rotated)
 
     device = all_cls_head.device
     anchors = anchors.to(device).type(all_cls_head.type())
@@ -312,9 +312,9 @@ def decode(all_cls_head, all_box_head, stride=1, threshold=0.05, top_n=1000, anc
 def nms(all_scores, all_boxes, all_classes, nms=0.5, ndetections=100):
     'Non Maximum Suppression'
 
-    if torch.cuda.is_available():
-        return nms_cuda(all_scores.float(), all_boxes.float(), all_classes.float(), 
-            nms, ndetections, False)
+    # if torch.cuda.is_available():
+    #     return nms_cuda(all_scores.float(), all_boxes.float(), all_classes.float(), 
+    #         nms, ndetections, False)
 
     device = all_scores.device
     batch_size = all_scores.size()[0]
@@ -370,9 +370,9 @@ def nms(all_scores, all_boxes, all_classes, nms=0.5, ndetections=100):
 def nms_rotated(all_scores, all_boxes, all_classes, nms=0.5, ndetections=100):
     'Non Maximum Suppression'
 
-    if torch.cuda.is_available():
-        return nms_cuda(all_scores.float(), all_boxes.float(), all_classes.float(), 
-            nms, ndetections, True)
+    # if torch.cuda.is_available():
+    #     return nms_cuda(all_scores.float(), all_boxes.float(), all_classes.float(), 
+    #         nms, ndetections, True)
 
     device = all_scores.device
     batch_size = all_scores.size()[0]

@@ -219,5 +219,5 @@ def train(model, state, path, annotations, val_path, val_annotations, resize, ma
             if (iteration==iterations and not rotated_bbox) or (iteration>iterations and rotated_bbox):
                 break
 
-    if is_master and logdir is not None:
-        writer.close()
+    # if is_master and logdir is not None:
+    #     writer.close()

@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 
 from . import backbones as backbones_mod
-from ._C import Engine
+# from ._C import Engine
 from .box import generate_anchors, snap_to_anchors, decode, nms
 from .box import generate_anchors_rotated, snap_to_anchors_rotated, nms_rotated
 from .loss import FocalLoss, SmoothL1Loss

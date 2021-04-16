@@ -9,7 +9,7 @@ import torch.multiprocessing
 
 from odtk import infer, train, utils
 from odtk.model import Model
-from odtk._C import Engine
+# from odtk._C import Engine
 
 
 def parse(args):
